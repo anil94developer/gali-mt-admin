@@ -1,0 +1,1 @@
+<h2>Redeemed Requested Successfull. Please wait for 5 to 10 min for balance into your application wallet</h2>

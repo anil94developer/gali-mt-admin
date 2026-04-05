@@ -1,0 +1,86 @@
+@extends('administrator.layout.administrator')
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h6 class="panel-title txt-dark"> Declare Result</h6>
+                </div>
+                <div class="pull-right">
+                   <a href="{{route('admin_market')}}" class="btn btn-danger">Go Back</a>
+                </div>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-wrap">
+                                    <div class="form-body">
+                                        <hr class="light-grey-hr"/>
+                                        <div class="row">
+                                        {{ Form::open(array('url' => route('admin_result_starline'), 'data-toggle'=>'validator' , 'class'=> 'form-horizontal', 'enctype'=>'multipart/form-data')) }}
+                                            <input type="hidden" name="id" value="{{$id}}"> 
+                                            <div class="col-md-9">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">Enter No.<span class="text-danger">*</span></label>
+                                                    <div class="col-md-7">
+                                                       <input type="text"class="form-control" name="number" placeholder="Enter Number No" required >
+                                                        @error('number')
+                                                            <div class="alert alert-danger alert-dismissable alert-style-1">
+                                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                                <i class="zmdi zmdi-block"></i>{{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="col-md-9">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">Enter Bahar No.<span class="text-danger">*</span></label>
+                                                    <div class="col-md-7">
+                                                       <input type="text"class="form-control" name="bahar" placeholder="Enter Bahar No" required >
+                                                        @error('bahar')
+                                                            <div class="alert alert-danger alert-dismissable alert-style-1">
+                                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                                <i class="zmdi zmdi-block"></i>{{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                          
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="form-actions mt-10">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <button type="submit" class="btn btn-success  mr-10">Submit</button>
+                                                        <button type="reset" class="btn btn-default">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"> </div>
+                                        </div>
+                                    </div>
+                                {{ Form::close() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@push('scripts')
+<script src="{{asset('/backend/developer/js/subAdmin.js')}}"></script>
+<script>
+
+	</script>
+@endpush

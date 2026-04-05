@@ -1,0 +1,523 @@
+.navbar {
+    text-align: center;
+    border: 2px solid black;
+}
+.navbar>div {
+    display: inline-block;
+}
+.link1 {
+    width: 25%;
+}
+.link2 {
+    width: 24%;
+}
+.link3 {
+    width: 25%;
+}
+.videos
+{
+    display:inline-block;
+    text-align: center;
+    background-color: #1d2645;
+}
+.videos ul
+{
+    padding: 0;
+}
+.videos ul li
+{
+    width: 33.33%;
+    list-style: none;
+    float: left;
+    padding: 20px;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+.navbar a {
+    display: block;
+    color: #1d2645;
+    text-decoration: none;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background: #fff;
+    font-weight: bold;
+}
+a {
+    color: red;
+    text-decoration: none;
+}
+body {
+    background-color: #1d2645 !important;
+}
+.content {
+    background: #000;
+    text-align: center;
+}
+.content h2 {
+    padding: 2px;
+    background: #fff;
+    font-weight: 700;
+    border-radius: 30px;
+}
+.content h2, h1 {
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol!important;
+}
+.tables-data {
+    border: solid 2px red;
+}
+table {
+    border-top: 1px solid #1f5718;
+    border-left: 1px solid #1f5718;
+    width: 100%;
+    border-spacing: 0px;
+    /*text-align: center;*/
+    /* margin: 0 0 25px; */
+}
+table {
+    /*font-weight: 900;*/
+    width: 100%;
+    color: #fff;
+}
+.tables-data td {
+    border: solid 2px red;
+}
+.tables-data {
+   overflow: scroll;
+}
+.text_1 {
+    font-size: 22px;
+    color: red;
+    padding: 10px;
+}
+.text_2 {
+    font-size: 25px;
+    color: blue;
+    padding: 10px;
+}
+section {
+    background: #fff;
+}
+.table-main .tr1 {
+	color: #000;
+    }
+.warning-section {
+	text-align: center;
+}
+.warning-section p {
+    color: red;
+    font-weight: bold;
+}
+.footer 
+{   font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+.game {
+    background: #000;
+    padding: 0;
+    border: double 6px yellow;
+    border-radius: 30px;
+}
+p {
+    font-size: 15px;
+    color: #000;
+}
+.warning-section h1 {
+    font-size: 20px;
+    color:#000; 
+}
+.foottab {
+    text-align: center;
+}
+.chartfoot {
+    border: solid 1px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+ 
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+.badge {
+  position: absolute;
+  right: 0px;
+  top: -5px;
+  z-index: 10;
+}
+
+.message-count {
+  position: relative;
+  display: block;
+  font: bold 14px/13px Helvetica, Verdana, Tahoma;
+  text-align: center;
+  margin: 0;
+  top: 2px;
+}
+.float{
+    position:fixed;
+    width:50px;
+    height:40px;
+    bottom:40px;
+    right:40px;
+    background-color:#001fff;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+  font-size:30px;
+    box-shadow: 2px 2px 3px #999;
+  z-index:100;
+}
+
+.my-float{
+    margin-top:16px;
+}
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+ 
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+  
+.ball {
+  position: fixed;
+  bottom: 60px;
+  left: 60px;
+  margin-top: -50px;
+  margin-left: -50px;
+  height: 70px;
+  width: 70px;
+  border: 3px solid #FFF;
+  background: url(ss.png);
+  background-size: contain;
+  border-radius: 1000px;
+  transform: scale(0);
+  opacity: 0;
+  transition-duration: 0;
+  transition-timing-function: cubic-bezier(0.005, 0.95, 0.135, 1.205);
+}
+.ball .msg-count {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #FFF;
+  border: 3px solid #FFF;
+  background: #E80202;
+  height: 25px;
+  width: 25px;
+  border-radius: 1000px;
+  text-align: center;
+  line-height: 18px;
+  font-size: 12px;
+  opacity: 0;
+  transform: scale(0);
+  transition-timing-function: cubic-bezier(0.005, 0.95, 0.135, 1.205);
+}
+.ball .halo {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  border-radius: 1000px;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(0);
+}
+.ball .notif {
+  position: absolute;
+  top: -50px;
+  left: -20px;
+  width: 160px;
+  opacity: 0;
+}
+.ball .notif .bar {
+  position: relative;
+  border-radius: 1000px;
+  background: #FFF;
+  height: 30px;
+  line-height: 30px;
+  width: 0;
+  margin: 0 auto;
+  padding: 0 10px;
+  overflow: hidden;
+}
+.ball .notif .bar .text {
+  position: absolute;
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+  width: 175px;
+  z-index: 1;
+}
+.ball .notif .bar .action {
+  position: relative;
+  z-index: 2;
+  height: 20px;
+  width: 20px;
+  background: #BABABA;
+  float: right;
+  margin-top: 5px;
+  border-radius: 100px;
+  box-shadow: 10px 0 0 0 #FFF, -10px 0 10px 0 #FFF, inset 0 0 0 1px #FFF;
+  border: 1px solid #BABABA;
+}
+.ball .notif .bar .action::after {
+  content: '';
+  border-left: 5px solid #FFF;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  display: block;
+  margin-left: 7px;
+  margin-top: 4px;
+}
+.ball .notif .arrow {
+  top: 30px;
+  border-top: 7px solid #FFF;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  width: 0;
+  margin: 0 auto;
+  transform-origin: top;
+  transform: scale(0);
+}
+
+.anim-start .ball {
+  opacity: 1;
+  transform: none;
+  transition-duration: .3s;
+}
+.anim-start .ball .notif {
+  opacity: 1;
+  transition-duration: .2s;
+  transition-delay: 1.6s;
+}
+.anim-start .ball .notif .bar {
+  width: 100%;
+  transition-duration: .6s;
+  transition-delay: 1.6s;
+}
+.anim-start .ball .notif .arrow {
+  transform: none;
+  transition-delay: 1.6s;
+  transition-duration: .3s;
+}
+.anim-start .ball .halo {
+  opacity: 0;
+  transform: none;
+  transition-duration: .6s;
+  transition-delay: 1.2s;
+}
+.anim-start .ball .msg-count {
+  opacity: 1;
+  transform: none;
+  transition-duration: .3s;
+  transition-delay: .6s;
+}
+p {
+  margin: 0;
+}
+
+ .game-name {
+    font-size: 30px;
+    color: #fff;
+    font-weight: bold;
+    text-align:center;
+    margin:0;
+}
+.game-vals {
+    font-size: 30px;
+    color: #fff;
+    font-weight: bold;
+    text-align:center;
+    margin: 0;
+}
+.content_list a {
+  font-size: 18px;
+  margin: 0px;
+}
+.black {
+  font-size: 24px;
+  color:#000!important;
+}
+
+.refreshButton {
+    background-color: WHITE;
+    color: rgb(48, 5, 28);
+    border-width: 4px;
+    border-color: #ff0000;
+    border-style: inset;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1.5em;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 70px;
+    right: 10px;
+} 
+ .open-button {
+        background-color: #555;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        position: fixed;
+        bottom: 70px;
+        left: -10px;
+        width: 100px;
+        background-color: #2C5A85;
+        padding: 10px 5px 5px 10px;
+        border: 1px solid #2c5a85;
+        cursor: pointer;
+        border-radius: 4px 4px 0 0;
+      }
+
+      /* The popup form - hidden by default */
+      .form-popup {
+        display: none;
+        position: fixed;
+        bottom: 40px;
+        left: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        background-color: #fff;
+      }
+
+      /* Add styles to the form container */
+      .form-container {
+        /*max-width: 300px;
+  padding: 10px;*/
+        background-color: white;
+      }
+
+      /* Full-width input fields */
+      .form-container input[type=text],
+      .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+      }
+
+      /* When the inputs get focus, do something */
+      .form-container input[type=text]:focus,
+      .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+      }
+
+      /* Set a style for the submit/login button */
+      .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+      }
+
+      /* Add a red background color to the cancel button */
+      .form-container .cancel {
+        background-color: #ff2805;
+        padding: 10px 5px 5px 10px;
+        border: 1px solid #2c5a85;
+        cursor: pointer;
+        border-radius: 4px 4px 0 0;
+      }
+
+      /* Add some hover effects to buttons */
+      .form-container .btn:hover,
+      .open-button:hover {
+        opacity: 1;
+      }
+
+      .badge {
+        background: red;
+        padding: 10px;
+        font-weight: bold;
+        border-radius: 33px;
+      }
+
+      .game-satta {
+        background: #000;
+      }
+
+      .border {
+        padding: 2px;
+      }
+
+      body{background-color:#000}a{color:#039}.quote{font-style:bold;border-width:2px;border-style:solid;border-color:#00f;color:#000;font-size:16px;background-color:#ff3;border-top-left-radius:2px;border-top-right-radius:2px;border-bottom-right-radius:2px;border-bottom-left-radius:2px}.refresh{background:#08501b;color:#fff;font-weight:700;font-size:1em;border-radius:5px;position:fixed;bottom:50px;left:5px;padding:5px 8px}.entryNumber{width:40px;height:40px;background-image:radial-gradient(circle at 50% 21%,#ffffff,#a5b6b4 83%,#dde3e3);float:center;margin:10px 5px 0 0;border-radius:50%;color:#000;font-weight:600;line-height:40px;font-family:Rubik;font-size:20px;font-weight:700;font-style:normal;font-stretch:normal;text-align:center}
+
+          .callout {
+  position: fixed;
+  bottom: 1px;
+  right: 1px;
+  margin-left: 20px;
+  max-width: 140px;
+}
+
+.callout-header {
+  padding: 5px 3px;
+  background: #555;
+  font-size: 12px;
+  color: white;
+}
+
+.callout-container {
+  padding: 10px;
+  background-color: #ccc;
+  color: black
+}
+
+.closebtn {
+  position: absolute;
+  top: 1px;
+  right: 15px;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.closebtn:hover {
+  color: lightgrey;
+}

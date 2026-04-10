@@ -6,7 +6,7 @@ use App\Models\Concerns\MongoDbDateTimeFix;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Jenssegers\Mongodb\Eloquent\HybridRelations;
 
-class AdminControl extends Eloquent
+class AppControl extends Eloquent
 {
 
     use HasFactory;

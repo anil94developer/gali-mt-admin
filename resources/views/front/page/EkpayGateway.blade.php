@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-    <title>Playonlineds</title>
+    <title>7STAR</title>
     <link href="css/app.46643acf.css" rel="preload" as="style">
     <link href="css/chunk-vendors.cf06751b.css" rel="preload" as="style">
 

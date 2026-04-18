@@ -4,7 +4,7 @@
 <!-- Mirrored from tejmatka.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 27 Oct 2021 13:09:12 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Playonlineds</title>
+<title>7STAR</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="{{URL::asset('front/assets/css/bootstrap.min.css')}}">
@@ -61,7 +61,7 @@
 <section class="call-to-action ptb--100" id="download">
   <div class="container">
     <div class="section-title text-white">
-      <h2>Download Our Perfect  Playonlineds App</h2>
+      <h2>Download Our Perfect  7STAR App</h2>
       <p>Play and enjoy with extra app features</p>
     </div>
     <div class="download-btns btn-area text-center"> <a download class="download" href=""><i class="fa fa-android"></i>Click Here To Download</a> </div>
@@ -70,7 +70,7 @@
 <div id="about" class="about-area ptb--100">
   <div class="container">
     <div class="section-title">
-      <h2>About Playonlineds !</h2>
+      <h2>About 7STAR !</h2>
       <p>Best Board Game Forevere</p>
     </div>
     <div class="row">

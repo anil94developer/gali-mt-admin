@@ -9,7 +9,7 @@
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h5 class="panel-title txt-dark">Playonlineds Market List</h5>
+                            <h5 class="panel-title txt-dark">7STAR Market List</h5>
                         </div>
                         <div class="pull-right">
                             <a href="{{route('add_gali_disawar_game')}}" class="btn btn-primary btn-anim"><i class="fa fa-plus"></i><span class="btn-text">Add New Game</span></a>

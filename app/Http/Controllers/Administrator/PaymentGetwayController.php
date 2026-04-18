@@ -98,8 +98,11 @@ class PaymentGetwayController extends Controller
 
         $insert = new PaymentGetway;
         $insert->name = $request->name;
-        // $insert->slug = str_slug($request->name, "-");  
-        $insert->slug = Str::slug($request->input( 'name'),'-');    
+        $slugInput = $request->input('slug');
+        $insert->slug = $slugInput !== null && $slugInput !== ''
+            ? Str::slug((string) $slugInput, '-')
+            : Str::slug($request->input('name'), '-');
+        $insert->status = 1;
 
         $insert->save();
 
@@ -370,11 +373,33 @@ class PaymentGetwayController extends Controller
     public function viewPaymentInstructionDetails($id)
     {
         $select = PaymentInstruction::where('id', $id)->first();
+        if (!$select && is_string($id) && preg_match('/^[a-f\d]{24}$/i', $id)) {
+            // In MongoDB the identifier is typically stored as `_id`.
+            try {
+                $select = PaymentInstruction::where('_id', new ObjectId($id))->first();
+            } catch (\Throwable $e) {
+                // Ignore invalid ObjectId formats and let the normal not-found flow happen.
+            }
+        }
+        if (!$select) {
+            return redirect()->route('payment_instruction_list')->with('error_message', 'Payment instruction not found.');
+        }
         return view('administrator.payment_instruction.viewDetails',compact('select'));
     }
     public function PaymentInstructionEdit($id)
     {
         $select = PaymentInstruction::where('id', $id)->first();
+        if (!$select && is_string($id) && preg_match('/^[a-f\d]{24}$/i', $id)) {
+            // In MongoDB the identifier is typically stored as `_id`.
+            try {
+                $select = PaymentInstruction::where('_id', new ObjectId($id))->first();
+            } catch (\Throwable $e) {
+                // Ignore invalid ObjectId formats and let the normal not-found flow happen.
+            }
+        }
+        if (!$select) {
+            return redirect()->route('payment_instruction_list')->with('error_message', 'Payment instruction not found.');
+        }
         return view('administrator.payment_instruction.edit',compact('select'));
     }
 

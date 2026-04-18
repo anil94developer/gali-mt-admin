@@ -29,6 +29,16 @@ class GetwayNewController extends Controller
 		$requestedGateway = $request->get('getaway') ?? $request->get('gateway') ?? $request->get('slug');
 		$requestedGateway = is_string($requestedGateway) ? trim($requestedGateway) : null;
 
+		// Allow dynamic UPI ID from URL query (used for QR/UPI generation for "menual" flow).
+		$requestedUpiId = $request->get('upi_id')
+			?? $request->get('upiId')
+			?? $request->get('upi')
+			?? $request->get('upiid');
+		$requestedUpiId = is_string($requestedUpiId) ? trim($requestedUpiId) : null;
+		if ($requestedUpiId && !preg_match('/^[a-zA-Z0-9._-]{2,256}@[a-zA-Z]{2,64}$/', $requestedUpiId)) {
+			$requestedUpiId = null;
+		}
+
 		if ($requestedGateway) {
 			if ($requestedGateway === 'scanner') {
 				$requestedGateway = 'payment-by-scanner';
@@ -80,13 +90,18 @@ class GetwayNewController extends Controller
 					'tr_status' => 'Pending',
 				];
 				DB::table('deposit_history')->insert($data);
+
+				if ($requestedUpiId && $upi) {
+					$upi->upiId = $requestedUpiId;
+				}
+
 				$intentData = "upi://pay?pa=" . $upi->upiId . "&pn=dubaiking&tn=" . $remark . "&am=" . $amount . "&cu=INR";
 				$qrcode = QrCode::size(250)
 					->margin(1)->generate(
 						$intentData
 					);
 				return view('front.page.manual_gateway', compact('rand', 'upi', 'remark', 'qrcode', 'paymentInstruction'));
-			} elseif (@$res->slug == "online") {
+			} elseif (@$res->slug == "online" || @$res->slug == "imb") {
 				// dd($request->all());
 				if (!isset($_GET['name']) || !isset($_GET['userid']) || !isset($_GET['amount']) || !isset($_GET['contact'])) {
 					return json_encode(['status' => false, 'message' => 'please Pass All Parameter!']);

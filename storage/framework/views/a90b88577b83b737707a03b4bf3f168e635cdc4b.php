@@ -5,8 +5,8 @@
   <meta name="description" content="Playonlineds">
   <meta name="keywords" content="HTML, CSS, JavaScript">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7STAR Result</title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <title>Playonlineds Result</title>
+    <link rel="stylesheet" href="<?php echo e(asset('css/bootstrap.min.css')); ?>">
     <style>
         body {
             background-color: black;
@@ -81,12 +81,13 @@
 
 <div class="w-100">
 <select name="month" id="month" class="w-100 form-control mx-2" style="width:100%">
-           @for ($i = 0; $i < 2; $i++)
-               <option value="{{ \Carbon\Carbon::now()->subMonths($i)->format('Y-m') }}"
-                   {{ request('month', now()->format('Y-m')) == \Carbon\Carbon::now()->subMonths($i)->format('Y-m') ? 'selected' : '' }}>
-                   {{ \Carbon\Carbon::now()->subMonths($i)->format('F Y') }}
+           <?php for($i = 0; $i < 2; $i++): ?>
+               <option value="<?php echo e(\Carbon\Carbon::now()->subMonths($i)->format('Y-m')); ?>"
+                   <?php echo e(request('month', now()->format('Y-m')) == \Carbon\Carbon::now()->subMonths($i)->format('Y-m') ? 'selected' : ''); ?>>
+                   <?php echo e(\Carbon\Carbon::now()->subMonths($i)->format('F Y')); ?>
+
                </option>
-           @endfor
+           <?php endfor; ?>
        </select>
 </div>
      <div>
@@ -95,29 +96,29 @@
    </form>
  </div>
 
-    <h2 class="result_title">{{ \Carbon\Carbon::parse($month)->format('F Y') }} Results</h2>
+    <h2 class="result_title"><?php echo e(\Carbon\Carbon::parse($month)->format('F Y')); ?> Results</h2>
 
    <div class="table-responsive">
    <table class="table table-bordered text-white">
         <thead>
             <tr>
                 <th>Date</th>
-                @foreach ($markets as $market)
-                    <th>{{ $market->market_id }}</th>
-                @endforeach
+                <?php $__currentLoopData = $markets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $market): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <th><?php echo e($market->market_id); ?></th>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tr>
         </thead>
         <tbody>
-            @foreach ($results as $row)
+            <?php $__currentLoopData = $results; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
-                    <td>{{ $row['date'] }}</td>
+                    <td><?php echo e($row['date']); ?></td>
                    
-                    @foreach ($markets as $market)
+                    <?php $__currentLoopData = $markets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $market): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     
-                        <td>{{ $row[$market->market_id] }}</td>
-                    @endforeach
+                        <td><?php echo e($row[$market->market_id]); ?></td>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tr>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>
     </table>
    </div>
@@ -125,3 +126,4 @@
 
 </body>
 </html>
+<?php /**PATH C:\wamp64\www\adminmt\resources\views/front/page/satta_results.blade.php ENDPATH**/ ?>

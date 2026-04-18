@@ -1,6 +1,4 @@
-@extends('administrator.layout.administrator')
-@section('content')
-
+<?php $__env->startSection('content'); ?>
 <section>
     <div>
         <div class="row">
@@ -10,25 +8,33 @@
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
                         <div class="pull-left">
-                            <h5 class="panel-title txt-dark">Payment Getway List</h5>
+                            <h5 class="panel-title txt-dark">Active User List</h5>
                         </div>
                         <div class="pull-right">
-                            <a href="{{ route('add_payment_getway') }}" class="btn btn-primary btn-anim mr-10"><i class="fa fa-plus"></i><span class="btn-text">Add payment gateway</span></a>
-                            <a href="{{ route('add_payment_getway', ['preset' => 'imb']) }}" class="btn btn-success btn-anim"><i class="fa fa-money"></i><span class="btn-text">Add IMB</span></a>
+                            <a href="<?php echo e(route('add_user')); ?>" class="btn btn-primary btn-anim"><i class="fa fa-plus"></i><span class="btn-text">Add New</span></a>
                         </div>
                     </div>
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">
                             <div class="table-wrap mt-40">
                                 <div class="table-responsive">
-                                    <table id="paymentgetway_list" class="table mb-0">
+                                    <table id="active_list" class="table mb-0">
                                         <thead>
                                             <tr>
                                                 <th>Sr.</th>
                                                 <th>Name</th>
-                                                <!-- <th>slug</th> -->
-                                                <th>status</th>
-                                                <!-- <th>Action</th> -->
+                                                <th>Password</th>
+                                                <th>Mobile</th>
+                                                <th>Balance</th>
+                                                <th>Winnig</th>
+                                                <th>Total Balance</th>
+                                                <th>Withdraw</th>
+                                                <th>Deposit</th>
+                                                <th>Ref Code</th>
+                                                <th>Ref By</th>
+                                                <th>Date</th>
+                                                <th>Banned</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -48,9 +54,9 @@
 
 <!-- Modal -->
 
-@endsection
-@push('scripts')
-<script src="{{asset('/backend/developer/js/PaymentGetway.js')}}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
+<script src="<?php echo e(asset('/backend/developer/js/User.js')); ?>"></script>
 <script>
 function myFunction(id) {  
   var copyText = document.getElementById("myInput_"+id);
@@ -66,4 +72,6 @@ function divFunction()
 }
 </script>
 
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('administrator.layout.administrator', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\adminmt\resources\views/administrator/user/active.blade.php ENDPATH**/ ?>

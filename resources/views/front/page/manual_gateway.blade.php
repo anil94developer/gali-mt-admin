@@ -13,7 +13,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Playonlineds</title>
+  <title>7STAR</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -61,7 +61,7 @@
     <div class="row text-center">
       <div class="col-md-12">
 
-        <h1 class="mt-5">Welcome to Playonlineds</h1>
+        <h1 class="mt-5">Welcome to 7STAR</h1>
       </div>
       <div class="col-md-12">
       <h2 class="mb-3">QR को स्कैन करके Add Money करें</h2>
@@ -80,7 +80,7 @@
               <input type="hidden" name="userid" value="{{ $user_id }}" />
               <input type="hidden" name="contact" value="{{ $contact }}" />
               <input type="hidden" name="name" value="{{ $name }}" />
-              <input type="hidden" name="upi" value="{{ $general_settings->upiId }}" />
+              <input type="hidden" name="upi" value="{{ isset($general_settings) ? $general_settings->upiId : $upi->upiId }}" />
               <input type="hidden" name="amount" value="{{ $amount }}" />
               <input type="hidden" name="transaction_id" value="{{ $rand }}" />
           </div>

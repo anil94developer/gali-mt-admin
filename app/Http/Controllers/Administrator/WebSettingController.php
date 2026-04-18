@@ -11,6 +11,7 @@ use App\Models\Point;
 use App\Models\Admin;
 use App\Models\Market;
 use App\Models\AppControl;
+use App\Models\AppControllerSetting;
 use App\Models\Banner;
 use Session;
 use Hash;
@@ -34,9 +35,26 @@ class WebSettingController extends Controller
     {
         return view('administrator.web_setting.app_image');
     }
-    public function Apk_manager()
+    public function Apk_manager(Request $request)
     {
-        $apkManager = AppControl::first();
+        $recordId = trim((string) $request->input('id', '1'));
+
+        $apkManager = null;
+        if ($recordId !== '') {
+            $query = DB::table('app_controller')->where('id', $recordId);
+            if (ctype_digit($recordId)) {
+                $query->orWhere('id', (int) $recordId);
+            }
+            $apkManager = $query->first();
+        }
+
+        if (!$apkManager) {
+            $apkManager = DB::table('app_controller')->first();
+        }
+
+        if (!$apkManager) {
+            $apkManager = (object) ['id' => $recordId];
+        }
         // dd$apkManager);
         return view('administrator.web_setting.apk_manager',compact('apkManager'));
     }
@@ -248,7 +266,7 @@ class WebSettingController extends Controller
     /**
      * Resolve app_controller document by Mongo _id (hex string vs ObjectId vs BSON string).
      */
-    private function findAppControlByRouteId($id): ?AppControl
+    private function findAppControlByRouteId($id): ?AppControllerSetting
     {
         if ($id === null || $id === '') {
             return null;
@@ -259,19 +277,19 @@ class WebSettingController extends Controller
             return null;
         }
 
-        $row = AppControl::find($id);
+        $row = AppControllerSetting::find($id);
         if ($row) {
             return $row;
         }
 
-        $row = AppControl::where('_id', $id)->first();
+        $row = AppControllerSetting::where('_id', $id)->first();
         if ($row) {
             return $row;
         }
 
         if (preg_match('/^[a-f\d]{24}$/i', $id)) {
             try {
-                $row = AppControl::where('_id', new ObjectId($id))->first();
+                $row = AppControllerSetting::where('_id', new ObjectId($id))->first();
                 if ($row) {
                     return $row;
                 }
@@ -279,7 +297,7 @@ class WebSettingController extends Controller
                 // invalid ObjectId
             }
 
-            $doc = AppControl::raw(function ($collection) use ($id) {
+            $doc = AppControllerSetting::raw(function ($collection) use ($id) {
                 try {
                     return $collection->findOne(
                         ['$or' => [
@@ -296,7 +314,7 @@ class WebSettingController extends Controller
             if ($doc !== null) {
                 $attrs = is_array($doc) ? $doc : json_decode(json_encode($doc), true);
                 if (is_array($attrs) && isset($attrs['_id'])) {
-                    return (new AppControl)->newFromBuilder($attrs);
+                    return (new AppControllerSetting)->newFromBuilder($attrs);
                 }
             }
         }
@@ -306,6 +324,10 @@ class WebSettingController extends Controller
 
     public function update_Apk_manager(Request $request)
     {
+        if ($request->isMethod('get')) {
+            return $this->Apk_manager($request);
+        }
+
         $this->validate(
             $request,
             [
@@ -313,12 +335,7 @@ class WebSettingController extends Controller
             ]
         );
 
-        $apk = $this->findAppControlByRouteId($request->input('id'));
-        if (!$apk) {
-            return redirect()->route('apk_manager')->with('error_message', 'App settings record not found. Save the form again or contact support.');
-        }
-
-        $apk->update([
+        $payload = [
             'whatsapp' => $request->whatsapp,
             'help_line_number' => $request->help_line_number,
             'user_reg_no' => $request->user_reg_no,
@@ -349,9 +366,50 @@ class WebSettingController extends Controller
             'withdraw_otp' => $request->withdraw_otp,
             'withdraw_open_time' => $request->withdraw_open_time,
             'withdraw_close_time' => $request->withdraw_close_time,
-        ]);
+        ];
 
-        return redirect()->route('apk_manager')->with('success_message', 'App settings have been updated successfully.');
+        $recordId = trim((string) $request->input('id'));
+        if ($recordId === '') {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'id is required for update.',
+                ], 422);
+            }
+            return back()->with('error_message', 'id is required for update.');
+        }
+
+        $payload['id'] = $recordId;
+
+        $updateQuery = DB::table('app_controller')->where('id', $recordId);
+        if (ctype_digit($recordId)) {
+            $updateQuery->orWhere('id', (int) $recordId);
+        }
+        $updated = $updateQuery->update($payload);
+
+        if (!$updated) {
+            DB::table('app_controller')->insert($payload);
+        }
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'status' => true,
+                'message' => 'App settings have been updated successfully.',
+            ]);
+        }
+
+        $reloadQuery = DB::table('app_controller')->where('id', $recordId);
+        if (ctype_digit($recordId)) {
+            $reloadQuery->orWhere('id', (int) $recordId);
+        }
+        $apkManager = $reloadQuery->first();
+        if (!$apkManager) {
+            $apkManager = (object) [];
+        }
+
+        return response()
+            ->view('administrator.web_setting.apk_manager', compact('apkManager'))
+            ->setStatusCode(200);
     }
     
 }

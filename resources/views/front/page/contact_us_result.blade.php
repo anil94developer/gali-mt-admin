@@ -127,7 +127,7 @@ li
 						</div>
 						<div class="col-md-6">
 							<div class="contact-detail">
-								<h6>Playonlineds</h6>
+								<h6>7STAR</h6>
 								<ul>
 									
 									<li><i class="fa fa-envelope-o"></i>

@@ -32,7 +32,7 @@
                                                 </div>
                                             </div>
                                             
-                                            @if($select->file)
+                                            @if(!is_null($select) && !empty($select->file))
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">

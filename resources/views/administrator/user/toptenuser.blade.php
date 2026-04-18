@@ -102,7 +102,7 @@ $(document).ready(function () {
     $(window).load(function() {
         window.setTimeout(function() {
             $.toast({
-                heading: 'Welcome to Admin | Playonlineds',
+                heading: 'Welcome to Admin | 7STAR',
                 // text: 'Use the predefined ones, or specify a custom position object.',
                 position: 'top-right',
                 loaderBg: '#e69a2a',

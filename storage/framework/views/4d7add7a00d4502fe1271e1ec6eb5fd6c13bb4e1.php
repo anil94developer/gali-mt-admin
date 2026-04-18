@@ -1,5 +1,5 @@
-@extends('administrator.layout.administrator')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default card-view">
@@ -8,7 +8,7 @@
                     <h6 class="panel-title txt-dark">Add Payment Getway </h6>
                 </div>
                 <div class="pull-right">
-                   <a href="{{route('index_page')}}" class="btn btn-danger">Go Back</a>
+                   <a href="<?php echo e(route('index_page')); ?>" class="btn btn-danger">Go Back</a>
                 </div>
             </div>
             <div class="panel-wrapper collapse in">
@@ -16,7 +16,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-wrap">
-                                {{ Form::open(array('url' => route('store_payment_getwayData'), 'data-toggle'=>'validator' , 'class'=> 'form-horizontal', 'enctype'=>'multipart/form-data')) }}
+                                <?php echo e(Form::open(array('url' => route('store_payment_getwayData'), 'data-toggle'=>'validator' , 'class'=> 'form-horizontal', 'enctype'=>'multipart/form-data'))); ?>
+
                                 <div class="form-body">
                                         <hr class="light-grey-hr"/>
                                         <div class="row">
@@ -24,13 +25,21 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">Name<span class="text-danger">*</span></label>
                                                     <div class="col-md-7">
-                                                       <input type="text" class="form-control" name="name" placeholder="e.g. IMB" value="{{ old('name', request('preset') === 'imb' ? 'IMB' : '') }}" required >
-                                                        @error('name')
+                                                       <input type="text" class="form-control" name="name" placeholder="e.g. IMB" value="<?php echo e(old('name', request('preset') === 'imb' ? 'IMB' : '')); ?>" required >
+                                                        <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                                             <div class="alert alert-danger alert-dismissable alert-style-1">
                                                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                                <i class="zmdi zmdi-block"></i>{{ $message }}
+                                                                <i class="zmdi zmdi-block"></i><?php echo e($message); ?>
+
                                                             </div>
-                                                        @enderror
+                                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -38,7 +47,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">Slug <span class="text-muted">(optional)</span></label>
                                                     <div class="col-md-7">
-                                                       <input type="text" class="form-control" name="slug" placeholder="imb — UPI Gateway flow (same as online)" value="{{ old('slug', request('preset') === 'imb' ? 'imb' : '') }}" >
+                                                       <input type="text" class="form-control" name="slug" placeholder="imb — UPI Gateway flow (same as online)" value="<?php echo e(old('slug', request('preset') === 'imb' ? 'imb' : '')); ?>" >
                                                         <span class="help-block">Leave empty to auto-generate from name. Use <code>imb</code> for IMB UPI gateway.</span>
                                                     </div>
                                                 </div>
@@ -59,7 +68,8 @@
                                             <div class="col-md-6"> </div>
                                         </div>
                                     </div>
-                                {{ Form::close() }}
+                                <?php echo e(Form::close()); ?>
+
                             </div>
                         </div>
                     </div>
@@ -68,9 +78,9 @@
         </div>
     </div>
 </div>
-@endsection
-@push('scripts')
-<script src="{{asset('/backend/developer/js/market.js')}}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
+<script src="<?php echo e(asset('/backend/developer/js/market.js')); ?>"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
@@ -85,4 +95,6 @@ $('.datepicker').datepicker({
 });
 
 	</script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('administrator.layout.administrator', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\adminmt\resources\views/administrator/paymentGetway/addpaymentgetway.blade.php ENDPATH**/ ?>

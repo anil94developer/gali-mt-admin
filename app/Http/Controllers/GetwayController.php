@@ -12,6 +12,7 @@ use Response;
 use Illuminate\Support\Facades\Redirect;
 // use User;
 use App\Models\AppControl;
+use App\Models\AppControllerSetting;
 use App\Models\PaymentGetway;
 use App\Models\DepositHistory;
 use App\Models\ScannerPayment;
@@ -37,6 +38,16 @@ class GetwayController extends Controller
 		$requestedGateway = $request->get('getaway') ?? $request->get('gateway') ?? $request->get('slug');
 		$requestedGateway = is_string($requestedGateway) ? trim($requestedGateway) : null;
 
+		// Allow dynamic UPI ID from URL query (used for QR/UPI generation for "menual" flow).
+		$requestedUpiId = $request->get('upi_id')
+			?? $request->get('upiId')
+			?? $request->get('upi')
+			?? $request->get('upiid');
+		$requestedUpiId = is_string($requestedUpiId) ? trim($requestedUpiId) : null;
+		if ($requestedUpiId && !preg_match('/^[a-zA-Z0-9._-]{2,256}@[a-zA-Z]{2,64}$/', $requestedUpiId)) {
+			$requestedUpiId = null;
+		}
+
 		if (!empty($requestedGateway)) {
 			// Normalize short values like "scanner" to real slug
 			if ($requestedGateway === 'scanner') {
@@ -55,7 +66,11 @@ class GetwayController extends Controller
 		if (!$res) {
 			$res = PaymentGetway::where('status', 1)->first();
 		}
-		$upi = AppControl::select('upiId', 'help_line_number')->first();
+		$upi = AppControllerSetting::select('upiId', 'help_line_number')->first();
+		if (!$upi) {
+			// Fallback for legacy deployments still using admin_config.
+			$upi = AppControl::select('upiId', 'help_line_number')->first();
+		}
 		$paymentInstruction = PaymentInstruction::where('status', 1)->first();
 		$chkuser = User::where('user_id', $request->userid)->count();
 		$userDetail = User::where('user_id', $request->userid)->first();
@@ -87,6 +102,10 @@ class GetwayController extends Controller
 					'tr_status' => 'Pending',
 				]);
 
+				if ($requestedUpiId && $upi) {
+					$upi->upiId = $requestedUpiId;
+				}
+
 				$intentData = "upi://pay?pa=" . $upi->upiId . "&pn=dubaiking&tn=" . $remark . "&am=" . $amount . "&cu=INR";
 
 				$qrcode = QrCode::size(250)
@@ -95,9 +114,15 @@ class GetwayController extends Controller
 					);
 
 				// $id = $store->_id;
-				$general_settings = AppControl::first();
+				$general_settings = AppControllerSetting::first();
+				if (!$general_settings) {
+					$general_settings = AppControl::first();
+				}
+				if ($requestedUpiId && $general_settings) {
+					$general_settings->upiId = $requestedUpiId;
+				}
 				return view('front.page.manual_gateway', compact('rand', 'upi', 'remark', 'paymentInstruction', 'intentData', 'qrcode', 'general_settings'));
-			} elseif (@$res->slug == "online") {
+			} elseif (@$res->slug == "online" || @$res->slug == "imb") {
 				// dd($request->all());
 				if (!isset($_GET['name']) || !isset($_GET['userid']) || !isset($_GET['amount']) || !isset($_GET['contact'])) {
 					return json_encode(['status' => false, 'message' => 'please Pass All Parameter!']);

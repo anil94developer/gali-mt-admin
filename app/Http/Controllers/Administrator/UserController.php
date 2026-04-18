@@ -391,17 +391,20 @@ class UserController extends Controller
             $nestedData[] = $user->FullName;
             $nestedData[] = $user->us_pass;
             $nestedData[] = $user->mob;
-            $nestedData[] = $user->credit;
+            $credit = (int) preg_replace('/[^\d]/', '', (string) ($user->credit ?? 0));
+            $winAmount = (int) preg_replace('/[^\d]/', '', (string) ($user->win_amount ?? 0));
+            $nestedData[] = $credit;
 
             // $deposit_point = $pointsData[$user->user_id]['TRDEPO002'] ?? 0;
             // $deposit_his = $depositPointsData[$user->user_id] ?? 0; // fixed this line
             $uidKey = (string) $user->user_id;
             $withdraw = $pointsData[$uidKey]['TRWITH003'] ?? $pointsData[$user->user_id]['TRWITH003'] ?? 0;
+            $withdraw = (int) $withdraw;
             // echo((string)$user->user_id);die;
-            $deposit_point = Helper::userdepositamout($user->user_id);
+            $deposit_point = (int) Helper::userdepositamout($user->user_id);
 
-            $nestedData[] = $user->win_amount;
-            $nestedData[] = $user->credit + $user->win_amount;
+            $nestedData[] = $winAmount;
+            $nestedData[] = $credit + $winAmount;
             $nestedData[] = $withdraw;
             $nestedData[] = $deposit_point;
             $nestedData[] = $user->ref_code;
@@ -593,7 +596,9 @@ class UserController extends Controller
             return redirect()->route('active_user')->with('error_message', 'User not found.');
         }
         $date = date('d-m-Y');
-        $total = $all_user->credit + $request->deposit;
+        $depositAmount = (int) preg_replace('/[^\d]/', '', (string) $request->deposit);
+        $currentCredit = (int) preg_replace('/[^\d]/', '', (string) ($all_user->credit ?? 0));
+        $total = $currentCredit + $depositAmount;
         // dd($total);
         $all_user->update(['credit' => (int) $total]);
         $currentDateTime = Carbon::now();
@@ -611,7 +616,7 @@ class UserController extends Controller
         $obj->value_update_by = 'Deposit';
         $obj->tr_device = 'Deposit';
         $obj->transactionRef = 'Deposit-By-Admin';
-        $obj->tr_value = (int) $request->deposit;
+        $obj->tr_value = $depositAmount;
         $obj->tr_status = 'Success';
         $obj->date = $date;
         $obj->date_time = $formattedDateTime;
@@ -621,7 +626,7 @@ class UserController extends Controller
             $work->user_id = $all_user->user_id;
             $work->app_id = 'com.dubaiking';
             $work->transaction_id = rand('000000', '999999');
-            $work->tr_value = $request->deposit;
+            $work->tr_value = $depositAmount;
             $work->tr_status = "Success";
             $work->type = "Credit";
             $work->tr_remark = "Deposit By Admin";

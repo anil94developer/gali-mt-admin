@@ -1,5 +1,10 @@
 @extends('administrator.layout.administrator')
 @section('content')
+@php
+    if (is_array($apkManager)) {
+        $apkManager = (object) $apkManager;
+    }
+@endphp
 
 <section>
     <div>
@@ -21,23 +26,23 @@
                             <div class="table-wrap mt-40">
                                 <!-- <form> -->
                                     <!-- @csrf -->
-                                    {{ Form::open(array('url' => route('apk_manager_update'), 'data-toggle'=>'validator','method'=>'post' , 'class'=> '', 'enctype'=>'multipart/form-data')) }}
-                                    <input type="hidden" class="form-control" name="id" id="id" value="{{ $apkManager->id }}">
+                                    {{ Form::open(array('url' => route('apk_manager_update'), 'data-toggle'=>'validator','method'=>'post' , 'class'=> '', 'id' => 'apkManagerForm', 'enctype'=>'multipart/form-data')) }}
+                                    <input type="hidden" class="form-control" name="id" id="id" value="{{ old('id', isset($apkManager->id) ? (string) $apkManager->id : (isset($apkManager->_id) ? (string) $apkManager->_id : '')) }}">
                                     <div class="col-md-6 form-group m-0">
                                         <label for="whatsapp" class="form-label">Whatsapp No.</label>
-                                        <input type="text" class="form-control" name="whatsapp" id="whatsapp" value="{{$apkManager->whatsapp}}">
+                                        <input type="text" class="form-control" name="whatsapp" id="whatsapp" value="{{ old('whatsapp', $apkManager->whatsapp ?? '') }}">
                                     </div>
                                     <div class="col-md-6 form-group  m-0">
                                         <label for="whatsapp" class="form-label">User Reg. No.</label>
-                                        <input type="text" class="form-control" name="user_reg_no" id="user_reg_no" value="{{$apkManager->user_reg_no}}">
+                                        <input type="text" class="form-control" name="user_reg_no" id="user_reg_no" value="{{ old('user_reg_no', $apkManager->user_reg_no ?? '') }}">
                                     </div>
                                     <div class="col-md-6 form-group  m-0">
                                         <label for="min_deposit" class="form-label">Minimum Deposit</label>
-                                        <input type="text" class="form-control" name="min_deposit" id="min_deposit" value="{{$apkManager->min_deposit}}">
+                                        <input type="text" class="form-control" name="min_deposit" id="min_deposit" value="{{ old('min_deposit', $apkManager->min_deposit ?? '') }}">
                                     </div>
                                     <div class="col-md-6 form-group  m-0">
                                         <label for="min_deposit" class="form-label">Maximum Deposit</label>
-                                        <input type="text" class="form-control" name="max_deposit" id="max_deposit" value="{{$apkManager->max_deposit}}">
+                                        <input type="text" class="form-control" name="max_deposit" id="max_deposit" value="{{ old('max_deposit', $apkManager->max_deposit ?? '') }}">
                                     </div>
                                     <div class="col-md-6 form-group  m-0">
                                         <label for="min_deposit" class="form-label">Minimum jodi</label>
@@ -152,7 +157,7 @@
                                     </div>
 
 
-                                    <!-- <div class="col-md-6 form-group">
+                                    {{-- <div class="col-md-6 form-group">
                                         <label for="inputPassword4" class="form-label">Doublele Pana Value 2</label>
                                         <input type="number" class="form-control" id="inputPassword4" value="{{$apkManager->double_pana_value2}}" >
                                     </div>
@@ -180,7 +185,7 @@
                                     <div class="col-md-6 form-group">
                                         <label for="inputCity" class="form-label">Full Sangam Value 2</label>
                                         <input type="number" class="form-control" id="inputCity" value="{{$apkManager->Half_Sangam_Value2}}">
-                                    </div> -->
+                                    </div> --}}
                                     <div class="col-md-6 form-group m-0">
                                         <label for="inputCity" class="form-label">Withdraw Otp</label>
                                         <input type="text" class="form-control" name="withdraw_otp" id="withdraw_otp" value="{{$apkManager->withdraw_otp}}">
@@ -208,7 +213,41 @@
 @push('scripts')
 <script src="{{asset('/backend/developer/js/GaliDisawar.js')}}"></script>
 <script>
+$(function () {
+    $('#apkManagerForm').on('submit', function (e) {
+        e.preventDefault();
 
+        var $form = $(this);
+        var $btn = $form.find('button[type="submit"]');
+        var originalText = $btn.text();
+        $btn.prop('disabled', true).text('Saving...');
+
+        $.ajax({
+            url: $form.attr('action'),
+            type: 'POST',
+            data: $form.serialize(),
+            success: function (res) {
+                var currentId = $('#id').val() || '1';
+                if (res && res.status) {
+                    window.location.href = "{{ route('apk_manager') }}" + "?id=" + encodeURIComponent(currentId);
+                    return;
+                }
+                alert('Settings saved, but unexpected response received.');
+                window.location.href = "{{ route('apk_manager') }}" + "?id=" + encodeURIComponent(currentId);
+            },
+            error: function (xhr) {
+                var msg = 'Unable to update settings.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    msg = xhr.responseJSON.message;
+                }
+                alert(msg);
+            },
+            complete: function () {
+                $btn.prop('disabled', false).text(originalText);
+            }
+        });
+    });
+});
 </script>
 
 @endpush

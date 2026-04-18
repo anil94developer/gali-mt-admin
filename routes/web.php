@@ -659,7 +659,7 @@ Route::group(['namespace' => 'Administrator', 'prefix' => 'administrator', 'midd
   Route::get('/view-Banner-details/{id}', [WebSettingController::class, 'viewDetails'])->Name('viewDetails');
   Route::get('/app-image', [WebSettingController::class, 'App_image'])->Name('app_image');
   Route::get('/apk-manager', [WebSettingController::class, 'Apk_manager'])->Name('apk_manager');
-  Route::post('/update-apk-manager', [WebSettingController::class, 'update_Apk_manager'])->Name('apk_manager_update');
+  Route::match(['get', 'post'], '/update-apk-manager', [WebSettingController::class, 'update_Apk_manager'])->Name('apk_manager_update');
   Route::get('/video', [WebSettingController::class, 'video'])->Name('video');
   Route::get('/page', [WebSettingController::class, 'page'])->Name('page');
 
